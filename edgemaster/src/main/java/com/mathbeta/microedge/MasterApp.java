@@ -12,7 +12,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  * @author xuxiuyou
  * @date 2018/11/20 18:22
  */
-@SpringBootApplication(scanBasePackages="com.mathbeta.microedge")
+@SpringBootApplication(scanBasePackages = "com.mathbeta.microedge")
 @MapperScan("com.mathbeta.microedge.mapper")
 @ServletComponentScan
 @EnableKnife4j
