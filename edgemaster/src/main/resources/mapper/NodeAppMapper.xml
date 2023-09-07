@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 节点应用关联表 -->
+<mapper namespace="com.mathbeta.microedge.mapper.NodeAppMapper">
+    <resultMap type="com.mathbeta.microedge.entity.NodeApp" id="nodeAppResultMap">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="VARCHAR"/>
+        <result column="version_id" property="versionId" jdbcType="VARCHAR"/>
+        <result column="node_id" property="nodeId" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--新增操作 -->
+    <insert id="create" parameterType="com.mathbeta.microedge.entity.NodeApp">
+        insert into edge_node_app
+        (`id`,`app_id`,`version_id`,`node_id`,`create_time`)
+        values
+        (#{id},#{appId},#{versionId},#{nodeId},#{createTime})
+    </insert>
+
+    <!--更新操作-->
+    <update id="update" parameterType="com.mathbeta.microedge.entity.NodeApp">
+        update edge_node_app
+        <include refid="sql_update"/>
+        where id = #{id}
+    </update>
+
+    <!--根据id删除-->
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from edge_node_app where id =#{id}
+    </delete>
+
+    <!--删除-->
+    <delete id="delete" parameterType="com.mathbeta.microedge.entity.NodeApp">
+        delete from edge_node_app
+        <include refid="sql_where_and_equal"/>
+    </delete>
+
+    <!--根据id查询-->
+    <select id="queryById"  resultMap="nodeAppResultMap">
+        <include refid="sql_select"/>
+        where s.id = #{id}
+    </select>
+
+    <!--获取数据条数-->
+    <select id="count" parameterType="java.util.Map" resultType="int">
+        select count(1) from edge_node_app t
+        <include refid="sql_where_and_equal"/>
+    </select>
+
+    <!--根据条件查询-->
+    <select id="query"  parameterType="java.util.Map" resultMap="nodeAppResultMap">
+        <include refid="sql_select"/>
+        <include refid="sql_where_and_equal"/>
+        order by s.create_time desc
+        <if test="__pageStart != null and __pageSize != null">
+        limit #{__pageStart},#{__pageSize}
+        </if>
+    </select>
+
+    <!--查询字段-->
+    <sql id="sql_select">
+        SELECT `id`,`app_id`,`version_id`,`node_id`,`create_time`        from edge_node_app s
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_and_equal">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                and (
+                `id` like CONCAT('%', #{search}, '%')
+				or `app_id` like CONCAT('%', #{search}, '%')
+				or `version_id` like CONCAT('%', #{search}, '%')
+				or `node_id` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                and `id` = #{id}
+            ]]>
+            </if>
+            <if test="appId != null  and appId != '' ">
+            <![CDATA[
+                and `app_id` = #{appId}
+            ]]>
+            </if>
+            <if test="versionId != null  and versionId != '' ">
+            <![CDATA[
+                and `version_id` = #{versionId}
+            ]]>
+            </if>
+            <if test="nodeId != null  and nodeId != '' ">
+            <![CDATA[
+                and `node_id` = #{nodeId}
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                and `create_time` = #{createTime}
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_or_equal">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                or (
+                `id` like CONCAT('%', #{search}, '%')
+				or `app_id` like CONCAT('%', #{search}, '%')
+				or `version_id` like CONCAT('%', #{search}, '%')
+				or `node_id` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                or `id` = #{id}
+            ]]>
+            </if>
+            <if test="appId != null  and appId != '' ">
+            <![CDATA[
+                or `app_id` = #{appId}
+            ]]>
+            </if>
+            <if test="versionId != null  and versionId != '' ">
+            <![CDATA[
+                or `version_id` = #{versionId}
+            ]]>
+            </if>
+            <if test="nodeId != null  and nodeId != '' ">
+            <![CDATA[
+                or `node_id` = #{nodeId}
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                or `create_time` = #{createTime}
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_and_like">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                and (
+                `id` like CONCAT('%', #{search}, '%')
+				or `app_id` like CONCAT('%', #{search}, '%')
+				or `version_id` like CONCAT('%', #{search}, '%')
+				or `node_id` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                and `id` like CONCAT('%', #{id}, '%')
+            ]]>
+            </if>
+            <if test="appId != null  and appId != '' ">
+            <![CDATA[
+                and `app_id` like CONCAT('%', #{appId}, '%')
+            ]]>
+            </if>
+            <if test="versionId != null  and versionId != '' ">
+            <![CDATA[
+                and `version_id` like CONCAT('%', #{versionId}, '%')
+            ]]>
+            </if>
+            <if test="nodeId != null  and nodeId != '' ">
+            <![CDATA[
+                and `node_id` like CONCAT('%', #{nodeId}, '%')
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                and `create_time` like CONCAT('%', #{createTime}, '%')
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_or_like">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                or (
+                `id` like CONCAT('%', #{search}, '%')
+				or `app_id` like CONCAT('%', #{search}, '%')
+				or `version_id` like CONCAT('%', #{search}, '%')
+				or `node_id` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                or `id` like CONCAT('%', #{id}, '%')
+            ]]>
+            </if>
+            <if test="appId != null  and appId != '' ">
+            <![CDATA[
+                or `app_id` like CONCAT('%', #{appId}, '%')
+            ]]>
+            </if>
+            <if test="versionId != null  and versionId != '' ">
+            <![CDATA[
+                or `version_id` like CONCAT('%', #{versionId}, '%')
+            ]]>
+            </if>
+            <if test="nodeId != null  and nodeId != '' ">
+            <![CDATA[
+                or `node_id` like CONCAT('%', #{nodeId}, '%')
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                or `create_time` like CONCAT('%', #{createTime}, '%')
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--更新操作-->
+    <sql id="sql_update">
+        <set>
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                `id` = #{id},
+            ]]>
+            </if>
+            <if test="appId != null  and appId != '' ">
+            <![CDATA[
+                `app_id` = #{appId},
+            ]]>
+            </if>
+            <if test="versionId != null  and versionId != '' ">
+            <![CDATA[
+                `version_id` = #{versionId},
+            ]]>
+            </if>
+            <if test="nodeId != null  and nodeId != '' ">
+            <![CDATA[
+                `node_id` = #{nodeId},
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                `create_time` = #{createTime},
+            ]]>
+            </if>
+        </set>
+    </sql>
+</mapper>

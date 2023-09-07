@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 节点信息 -->
+<mapper namespace="com.mathbeta.microedge.mapper.NodeMapper">
+    <resultMap type="com.mathbeta.microedge.entity.Node" id="nodeResultMap">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="ns_id" property="nsId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="ip" property="ip" jdbcType="VARCHAR"/>
+        <result column="token" property="token" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--新增操作 -->
+    <insert id="create" parameterType="com.mathbeta.microedge.entity.Node">
+        insert into edge_node
+        (`id`,`ns_id`,`name`,`ip`,`token`,`create_time`)
+        values
+        (#{id},#{nsId},#{name},#{ip},#{token},#{createTime})
+    </insert>
+
+    <!--更新操作-->
+    <update id="update" parameterType="com.mathbeta.microedge.entity.Node">
+        update edge_node
+        <include refid="sql_update"/>
+        where id = #{id}
+    </update>
+
+    <!--根据id删除-->
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from edge_node where id =#{id}
+    </delete>
+
+    <!--删除-->
+    <delete id="delete" parameterType="com.mathbeta.microedge.entity.Node">
+        delete from edge_node
+        <include refid="sql_where_and_equal"/>
+    </delete>
+
+    <!--根据id查询-->
+    <select id="queryById"  resultMap="nodeResultMap">
+        <include refid="sql_select"/>
+        where s.id = #{id}
+    </select>
+
+    <!--获取数据条数-->
+    <select id="count" parameterType="java.util.Map" resultType="int">
+        select count(1) from edge_node t
+        <include refid="sql_where_and_equal"/>
+    </select>
+
+    <!--根据条件查询-->
+    <select id="query"  parameterType="java.util.Map" resultMap="nodeResultMap">
+        <include refid="sql_select"/>
+        <include refid="sql_where_and_equal"/>
+        order by s.create_time desc
+        <if test="__pageStart != null and __pageSize != null">
+        limit #{__pageStart},#{__pageSize}
+        </if>
+    </select>
+
+    <!--查询字段-->
+    <sql id="sql_select">
+        SELECT `id`,`ns_id`,`name`,`ip`,`token`,`create_time`        from edge_node s
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_and_equal">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                and (
+                `id` like CONCAT('%', #{search}, '%')
+				or `ns_id` like CONCAT('%', #{search}, '%')
+				or `name` like CONCAT('%', #{search}, '%')
+				or `ip` like CONCAT('%', #{search}, '%')
+				or `token` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                and `id` = #{id}
+            ]]>
+            </if>
+            <if test="nsId != null  and nsId != '' ">
+            <![CDATA[
+                and `ns_id` = #{nsId}
+            ]]>
+            </if>
+            <if test="name != null  and name != '' ">
+            <![CDATA[
+                and `name` = #{name}
+            ]]>
+            </if>
+            <if test="ip != null  and ip != '' ">
+            <![CDATA[
+                and `ip` = #{ip}
+            ]]>
+            </if>
+            <if test="token != null  and token != '' ">
+            <![CDATA[
+                and `token` = #{token}
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                and `create_time` = #{createTime}
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_or_equal">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                or (
+                `id` like CONCAT('%', #{search}, '%')
+				or `ns_id` like CONCAT('%', #{search}, '%')
+				or `name` like CONCAT('%', #{search}, '%')
+				or `ip` like CONCAT('%', #{search}, '%')
+				or `token` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                or `id` = #{id}
+            ]]>
+            </if>
+            <if test="nsId != null  and nsId != '' ">
+            <![CDATA[
+                or `ns_id` = #{nsId}
+            ]]>
+            </if>
+            <if test="name != null  and name != '' ">
+            <![CDATA[
+                or `name` = #{name}
+            ]]>
+            </if>
+            <if test="ip != null  and ip != '' ">
+            <![CDATA[
+                or `ip` = #{ip}
+            ]]>
+            </if>
+            <if test="token != null  and token != '' ">
+            <![CDATA[
+                or `token` = #{token}
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                or `create_time` = #{createTime}
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_and_like">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                and (
+                `id` like CONCAT('%', #{search}, '%')
+				or `ns_id` like CONCAT('%', #{search}, '%')
+				or `name` like CONCAT('%', #{search}, '%')
+				or `ip` like CONCAT('%', #{search}, '%')
+				or `token` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                and `id` like CONCAT('%', #{id}, '%')
+            ]]>
+            </if>
+            <if test="nsId != null  and nsId != '' ">
+            <![CDATA[
+                and `ns_id` like CONCAT('%', #{nsId}, '%')
+            ]]>
+            </if>
+            <if test="name != null  and name != '' ">
+            <![CDATA[
+                and `name` like CONCAT('%', #{name}, '%')
+            ]]>
+            </if>
+            <if test="ip != null  and ip != '' ">
+            <![CDATA[
+                and `ip` like CONCAT('%', #{ip}, '%')
+            ]]>
+            </if>
+            <if test="token != null  and token != '' ">
+            <![CDATA[
+                and `token` like CONCAT('%', #{token}, '%')
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                and `create_time` like CONCAT('%', #{createTime}, '%')
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_or_like">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                or (
+                `id` like CONCAT('%', #{search}, '%')
+				or `ns_id` like CONCAT('%', #{search}, '%')
+				or `name` like CONCAT('%', #{search}, '%')
+				or `ip` like CONCAT('%', #{search}, '%')
+				or `token` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                or `id` like CONCAT('%', #{id}, '%')
+            ]]>
+            </if>
+            <if test="nsId != null  and nsId != '' ">
+            <![CDATA[
+                or `ns_id` like CONCAT('%', #{nsId}, '%')
+            ]]>
+            </if>
+            <if test="name != null  and name != '' ">
+            <![CDATA[
+                or `name` like CONCAT('%', #{name}, '%')
+            ]]>
+            </if>
+            <if test="ip != null  and ip != '' ">
+            <![CDATA[
+                or `ip` like CONCAT('%', #{ip}, '%')
+            ]]>
+            </if>
+            <if test="token != null  and token != '' ">
+            <![CDATA[
+                or `token` like CONCAT('%', #{token}, '%')
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                or `create_time` like CONCAT('%', #{createTime}, '%')
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--更新操作-->
+    <sql id="sql_update">
+        <set>
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                `id` = #{id},
+            ]]>
+            </if>
+            <if test="nsId != null  and nsId != '' ">
+            <![CDATA[
+                `ns_id` = #{nsId},
+            ]]>
+            </if>
+            <if test="name != null  and name != '' ">
+            <![CDATA[
+                `name` = #{name},
+            ]]>
+            </if>
+            <if test="ip != null  and ip != '' ">
+            <![CDATA[
+                `ip` = #{ip},
+            ]]>
+            </if>
+            <if test="token != null  and token != '' ">
+            <![CDATA[
+                `token` = #{token},
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                `create_time` = #{createTime},
+            ]]>
+            </if>
+        </set>
+    </sql>
+</mapper>

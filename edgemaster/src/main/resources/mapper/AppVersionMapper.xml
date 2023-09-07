@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- 应用版本 -->
+<mapper namespace="com.mathbeta.microedge.mapper.AppVersionMapper">
+    <resultMap type="com.mathbeta.microedge.entity.AppVersion" id="appVersionResultMap">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="app_id" property="appId" jdbcType="VARCHAR"/>
+        <result column="version_num" property="versionNum" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--新增操作 -->
+    <insert id="create" parameterType="com.mathbeta.microedge.entity.AppVersion">
+        insert into edge_app_version
+        (`id`,`app_id`,`version_num`,`image`,`description`,`create_time`)
+        values
+        (#{id},#{appId},#{versionNum},#{image},#{description},#{createTime})
+    </insert>
+
+    <!--更新操作-->
+    <update id="update" parameterType="com.mathbeta.microedge.entity.AppVersion">
+        update edge_app_version
+        <include refid="sql_update"/>
+        where id = #{id}
+    </update>
+
+    <!--根据id删除-->
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from edge_app_version where id =#{id}
+    </delete>
+
+    <!--删除-->
+    <delete id="delete" parameterType="com.mathbeta.microedge.entity.AppVersion">
+        delete from edge_app_version
+        <include refid="sql_where_and_equal"/>
+    </delete>
+
+    <!--根据id查询-->
+    <select id="queryById"  resultMap="appVersionResultMap">
+        <include refid="sql_select"/>
+        where s.id = #{id}
+    </select>
+
+    <!--获取数据条数-->
+    <select id="count" parameterType="java.util.Map" resultType="int">
+        select count(1) from edge_app_version t
+        <include refid="sql_where_and_equal"/>
+    </select>
+
+    <!--根据条件查询-->
+    <select id="query"  parameterType="java.util.Map" resultMap="appVersionResultMap">
+        <include refid="sql_select"/>
+        <include refid="sql_where_and_equal"/>
+        order by s.create_time desc
+        <if test="__pageStart != null and __pageSize != null">
+        limit #{__pageStart},#{__pageSize}
+        </if>
+    </select>
+
+    <!--查询字段-->
+    <sql id="sql_select">
+        SELECT `id`,`app_id`,`version_num`,`image`,`description`,`create_time`        from edge_app_version s
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_and_equal">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                and (
+                `id` like CONCAT('%', #{search}, '%')
+				or `app_id` like CONCAT('%', #{search}, '%')
+				or `version_num` like CONCAT('%', #{search}, '%')
+				or `image` like CONCAT('%', #{search}, '%')
+				or `description` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                and `id` = #{id}
+            ]]>
+            </if>
+            <if test="appId != null  and appId != '' ">
+            <![CDATA[
+                and `app_id` = #{appId}
+            ]]>
+            </if>
+            <if test="versionNum != null  and versionNum != '' ">
+            <![CDATA[
+                and `version_num` = #{versionNum}
+            ]]>
+            </if>
+            <if test="image != null  and image != '' ">
+            <![CDATA[
+                and `image` = #{image}
+            ]]>
+            </if>
+            <if test="description != null  and description != '' ">
+            <![CDATA[
+                and `description` = #{description}
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                and `create_time` = #{createTime}
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_or_equal">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                or (
+                `id` like CONCAT('%', #{search}, '%')
+				or `app_id` like CONCAT('%', #{search}, '%')
+				or `version_num` like CONCAT('%', #{search}, '%')
+				or `image` like CONCAT('%', #{search}, '%')
+				or `description` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                or `id` = #{id}
+            ]]>
+            </if>
+            <if test="appId != null  and appId != '' ">
+            <![CDATA[
+                or `app_id` = #{appId}
+            ]]>
+            </if>
+            <if test="versionNum != null  and versionNum != '' ">
+            <![CDATA[
+                or `version_num` = #{versionNum}
+            ]]>
+            </if>
+            <if test="image != null  and image != '' ">
+            <![CDATA[
+                or `image` = #{image}
+            ]]>
+            </if>
+            <if test="description != null  and description != '' ">
+            <![CDATA[
+                or `description` = #{description}
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                or `create_time` = #{createTime}
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_and_like">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                and (
+                `id` like CONCAT('%', #{search}, '%')
+				or `app_id` like CONCAT('%', #{search}, '%')
+				or `version_num` like CONCAT('%', #{search}, '%')
+				or `image` like CONCAT('%', #{search}, '%')
+				or `description` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                and `id` like CONCAT('%', #{id}, '%')
+            ]]>
+            </if>
+            <if test="appId != null  and appId != '' ">
+            <![CDATA[
+                and `app_id` like CONCAT('%', #{appId}, '%')
+            ]]>
+            </if>
+            <if test="versionNum != null  and versionNum != '' ">
+            <![CDATA[
+                and `version_num` like CONCAT('%', #{versionNum}, '%')
+            ]]>
+            </if>
+            <if test="image != null  and image != '' ">
+            <![CDATA[
+                and `image` like CONCAT('%', #{image}, '%')
+            ]]>
+            </if>
+            <if test="description != null  and description != '' ">
+            <![CDATA[
+                and `description` like CONCAT('%', #{description}, '%')
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                and `create_time` like CONCAT('%', #{createTime}, '%')
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_or_like">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                or (
+                `id` like CONCAT('%', #{search}, '%')
+				or `app_id` like CONCAT('%', #{search}, '%')
+				or `version_num` like CONCAT('%', #{search}, '%')
+				or `image` like CONCAT('%', #{search}, '%')
+				or `description` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                or `id` like CONCAT('%', #{id}, '%')
+            ]]>
+            </if>
+            <if test="appId != null  and appId != '' ">
+            <![CDATA[
+                or `app_id` like CONCAT('%', #{appId}, '%')
+            ]]>
+            </if>
+            <if test="versionNum != null  and versionNum != '' ">
+            <![CDATA[
+                or `version_num` like CONCAT('%', #{versionNum}, '%')
+            ]]>
+            </if>
+            <if test="image != null  and image != '' ">
+            <![CDATA[
+                or `image` like CONCAT('%', #{image}, '%')
+            ]]>
+            </if>
+            <if test="description != null  and description != '' ">
+            <![CDATA[
+                or `description` like CONCAT('%', #{description}, '%')
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                or `create_time` like CONCAT('%', #{createTime}, '%')
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--更新操作-->
+    <sql id="sql_update">
+        <set>
+            <if test="id != null  and id != '' ">
+            <![CDATA[
+                `id` = #{id},
+            ]]>
+            </if>
+            <if test="appId != null  and appId != '' ">
+            <![CDATA[
+                `app_id` = #{appId},
+            ]]>
+            </if>
+            <if test="versionNum != null  and versionNum != '' ">
+            <![CDATA[
+                `version_num` = #{versionNum},
+            ]]>
+            </if>
+            <if test="image != null  and image != '' ">
+            <![CDATA[
+                `image` = #{image},
+            ]]>
+            </if>
+            <if test="description != null  and description != '' ">
+            <![CDATA[
+                `description` = #{description},
+            ]]>
+            </if>
+            <if test="createTime != null  and createTime != '' ">
+            <![CDATA[
+                `create_time` = #{createTime},
+            ]]>
+            </if>
+        </set>
+    </sql>
+</mapper>
