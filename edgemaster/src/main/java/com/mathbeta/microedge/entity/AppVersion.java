@@ -40,6 +40,10 @@ public class AppVersion extends BaseEntity {
     private String image;
 
     
+    @ApiModelProperty(name = "runningConfig", value = "json格式容器运行配置，用于启动docker容器。\r\nenv，环境变量，格式[\"a=1\", \"b=2\"]\r\nportmappings，端口映射，格式[\"8080:80\", \"6443:443\"]\r\nvolumemappings，卷映射，格式[\"/path/on/host:/path/on/container\"]")
+    private String runningConfig;
+
+    
     @ApiModelProperty(name = "description", value = "描述")
     private String description;
 

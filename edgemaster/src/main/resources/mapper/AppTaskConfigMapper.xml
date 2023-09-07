@@ -1,58 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<!-- 应用版本 -->
-<mapper namespace="com.mathbeta.microedge.mapper.AppVersionMapper">
-    <resultMap type="com.mathbeta.microedge.entity.AppVersion" id="appVersionResultMap">
+<!-- 应用操作任务配置信息 -->
+<mapper namespace="com.mathbeta.microedge.mapper.AppTaskConfigMapper">
+    <resultMap type="com.mathbeta.microedge.entity.AppTaskConfig" id="appTaskConfigResultMap">
         <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="task_id" property="taskId" jdbcType="VARCHAR"/>
         <result column="app_id" property="appId" jdbcType="VARCHAR"/>
-        <result column="version_num" property="versionNum" jdbcType="VARCHAR"/>
-        <result column="image" property="image" jdbcType="VARCHAR"/>
-        <result column="running_config" property="runningConfig" jdbcType="VARCHAR"/>
-        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="app_version_id" property="appVersionId" jdbcType="VARCHAR"/>
+        <result column="order" property="order" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <!--新增操作 -->
-    <insert id="create" parameterType="com.mathbeta.microedge.entity.AppVersion">
-        insert into edge_app_version
-        (`id`,`app_id`,`version_num`,`image`,`running_config`,`description`,`create_time`)
+    <insert id="create" parameterType="com.mathbeta.microedge.entity.AppTaskConfig">
+        insert into edge_app_task_config
+        (`id`,`task_id`,`app_id`,`app_version_id`,`order`,`create_time`)
         values
-        (#{id},#{appId},#{versionNum},#{image},#{runningConfig},#{description},#{createTime})
+        (#{id},#{taskId},#{appId},#{appVersionId},#{order},#{createTime})
     </insert>
 
     <!--更新操作-->
-    <update id="update" parameterType="com.mathbeta.microedge.entity.AppVersion">
-        update edge_app_version
+    <update id="update" parameterType="com.mathbeta.microedge.entity.AppTaskConfig">
+        update edge_app_task_config
         <include refid="sql_update"/>
         where id = #{id}
     </update>
 
     <!--根据id删除-->
     <delete id="deleteById" parameterType="java.lang.String">
-        delete from edge_app_version where id =#{id}
+        delete from edge_app_task_config where id =#{id}
     </delete>
 
     <!--删除-->
-    <delete id="delete" parameterType="com.mathbeta.microedge.entity.AppVersion">
-        delete from edge_app_version
+    <delete id="delete" parameterType="com.mathbeta.microedge.entity.AppTaskConfig">
+        delete from edge_app_task_config
         <include refid="sql_where_and_equal"/>
     </delete>
 
     <!--根据id查询-->
-    <select id="queryById"  resultMap="appVersionResultMap">
+    <select id="queryById"  resultMap="appTaskConfigResultMap">
         <include refid="sql_select"/>
         where s.id = #{id}
     </select>
 
     <!--获取数据条数-->
     <select id="count" parameterType="java.util.Map" resultType="int">
-        select count(1) from edge_app_version t
+        select count(1) from edge_app_task_config t
         <include refid="sql_where_and_equal"/>
     </select>
 
     <!--根据条件查询-->
-    <select id="query"  parameterType="java.util.Map" resultMap="appVersionResultMap">
+    <select id="query"  parameterType="java.util.Map" resultMap="appTaskConfigResultMap">
         <include refid="sql_select"/>
         <include refid="sql_where_and_equal"/>
         order by s.create_time desc
@@ -63,7 +62,7 @@
 
     <!--查询字段-->
     <sql id="sql_select">
-        SELECT `id`,`app_id`,`version_num`,`image`,`running_config`,`description`,`create_time`        from edge_app_version s
+        SELECT `id`,`task_id`,`app_id`,`app_version_id`,`order`,`create_time`        from edge_app_task_config s
     </sql>
 
     <!--查询条件-->
@@ -73,11 +72,10 @@
             <if test="search != null and search != '' ">
                 and (
                 `id` like CONCAT('%', #{search}, '%')
+				or `task_id` like CONCAT('%', #{search}, '%')
 				or `app_id` like CONCAT('%', #{search}, '%')
-				or `version_num` like CONCAT('%', #{search}, '%')
-				or `image` like CONCAT('%', #{search}, '%')
-				or `running_config` like CONCAT('%', #{search}, '%')
-				or `description` like CONCAT('%', #{search}, '%')
+				or `app_version_id` like CONCAT('%', #{search}, '%')
+				or `order` like CONCAT('%', #{search}, '%')
 				or `create_time` like CONCAT('%', #{search}, '%')
                 )
             </if>
@@ -87,29 +85,24 @@
                 and `id` = #{id}
             ]]>
             </if>
+            <if test="taskId != null  and taskId != '' ">
+            <![CDATA[
+                and `task_id` = #{taskId}
+            ]]>
+            </if>
             <if test="appId != null  and appId != '' ">
             <![CDATA[
                 and `app_id` = #{appId}
             ]]>
             </if>
-            <if test="versionNum != null  and versionNum != '' ">
+            <if test="appVersionId != null  and appVersionId != '' ">
             <![CDATA[
-                and `version_num` = #{versionNum}
+                and `app_version_id` = #{appVersionId}
             ]]>
             </if>
-            <if test="image != null  and image != '' ">
+            <if test="order != null  and order != '' ">
             <![CDATA[
-                and `image` = #{image}
-            ]]>
-            </if>
-            <if test="runningConfig != null  and runningConfig != '' ">
-            <![CDATA[
-                and `running_config` = #{runningConfig}
-            ]]>
-            </if>
-            <if test="description != null  and description != '' ">
-            <![CDATA[
-                and `description` = #{description}
+                and `order` = #{order}
             ]]>
             </if>
             <if test="createTime != null  and createTime != '' ">
@@ -127,11 +120,10 @@
             <if test="search != null and search != '' ">
                 or (
                 `id` like CONCAT('%', #{search}, '%')
+				or `task_id` like CONCAT('%', #{search}, '%')
 				or `app_id` like CONCAT('%', #{search}, '%')
-				or `version_num` like CONCAT('%', #{search}, '%')
-				or `image` like CONCAT('%', #{search}, '%')
-				or `running_config` like CONCAT('%', #{search}, '%')
-				or `description` like CONCAT('%', #{search}, '%')
+				or `app_version_id` like CONCAT('%', #{search}, '%')
+				or `order` like CONCAT('%', #{search}, '%')
 				or `create_time` like CONCAT('%', #{search}, '%')
                 )
             </if>
@@ -141,29 +133,24 @@
                 or `id` = #{id}
             ]]>
             </if>
+            <if test="taskId != null  and taskId != '' ">
+            <![CDATA[
+                or `task_id` = #{taskId}
+            ]]>
+            </if>
             <if test="appId != null  and appId != '' ">
             <![CDATA[
                 or `app_id` = #{appId}
             ]]>
             </if>
-            <if test="versionNum != null  and versionNum != '' ">
+            <if test="appVersionId != null  and appVersionId != '' ">
             <![CDATA[
-                or `version_num` = #{versionNum}
+                or `app_version_id` = #{appVersionId}
             ]]>
             </if>
-            <if test="image != null  and image != '' ">
+            <if test="order != null  and order != '' ">
             <![CDATA[
-                or `image` = #{image}
-            ]]>
-            </if>
-            <if test="runningConfig != null  and runningConfig != '' ">
-            <![CDATA[
-                or `running_config` = #{runningConfig}
-            ]]>
-            </if>
-            <if test="description != null  and description != '' ">
-            <![CDATA[
-                or `description` = #{description}
+                or `order` = #{order}
             ]]>
             </if>
             <if test="createTime != null  and createTime != '' ">
@@ -181,11 +168,10 @@
             <if test="search != null and search != '' ">
                 and (
                 `id` like CONCAT('%', #{search}, '%')
+				or `task_id` like CONCAT('%', #{search}, '%')
 				or `app_id` like CONCAT('%', #{search}, '%')
-				or `version_num` like CONCAT('%', #{search}, '%')
-				or `image` like CONCAT('%', #{search}, '%')
-				or `running_config` like CONCAT('%', #{search}, '%')
-				or `description` like CONCAT('%', #{search}, '%')
+				or `app_version_id` like CONCAT('%', #{search}, '%')
+				or `order` like CONCAT('%', #{search}, '%')
 				or `create_time` like CONCAT('%', #{search}, '%')
                 )
             </if>
@@ -195,29 +181,24 @@
                 and `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
+            <if test="taskId != null  and taskId != '' ">
+            <![CDATA[
+                and `task_id` like CONCAT('%', #{taskId}, '%')
+            ]]>
+            </if>
             <if test="appId != null  and appId != '' ">
             <![CDATA[
                 and `app_id` like CONCAT('%', #{appId}, '%')
             ]]>
             </if>
-            <if test="versionNum != null  and versionNum != '' ">
+            <if test="appVersionId != null  and appVersionId != '' ">
             <![CDATA[
-                and `version_num` like CONCAT('%', #{versionNum}, '%')
+                and `app_version_id` like CONCAT('%', #{appVersionId}, '%')
             ]]>
             </if>
-            <if test="image != null  and image != '' ">
+            <if test="order != null  and order != '' ">
             <![CDATA[
-                and `image` like CONCAT('%', #{image}, '%')
-            ]]>
-            </if>
-            <if test="runningConfig != null  and runningConfig != '' ">
-            <![CDATA[
-                and `running_config` like CONCAT('%', #{runningConfig}, '%')
-            ]]>
-            </if>
-            <if test="description != null  and description != '' ">
-            <![CDATA[
-                and `description` like CONCAT('%', #{description}, '%')
+                and `order` like CONCAT('%', #{order}, '%')
             ]]>
             </if>
             <if test="createTime != null  and createTime != '' ">
@@ -235,11 +216,10 @@
             <if test="search != null and search != '' ">
                 or (
                 `id` like CONCAT('%', #{search}, '%')
+				or `task_id` like CONCAT('%', #{search}, '%')
 				or `app_id` like CONCAT('%', #{search}, '%')
-				or `version_num` like CONCAT('%', #{search}, '%')
-				or `image` like CONCAT('%', #{search}, '%')
-				or `running_config` like CONCAT('%', #{search}, '%')
-				or `description` like CONCAT('%', #{search}, '%')
+				or `app_version_id` like CONCAT('%', #{search}, '%')
+				or `order` like CONCAT('%', #{search}, '%')
 				or `create_time` like CONCAT('%', #{search}, '%')
                 )
             </if>
@@ -249,29 +229,24 @@
                 or `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
+            <if test="taskId != null  and taskId != '' ">
+            <![CDATA[
+                or `task_id` like CONCAT('%', #{taskId}, '%')
+            ]]>
+            </if>
             <if test="appId != null  and appId != '' ">
             <![CDATA[
                 or `app_id` like CONCAT('%', #{appId}, '%')
             ]]>
             </if>
-            <if test="versionNum != null  and versionNum != '' ">
+            <if test="appVersionId != null  and appVersionId != '' ">
             <![CDATA[
-                or `version_num` like CONCAT('%', #{versionNum}, '%')
+                or `app_version_id` like CONCAT('%', #{appVersionId}, '%')
             ]]>
             </if>
-            <if test="image != null  and image != '' ">
+            <if test="order != null  and order != '' ">
             <![CDATA[
-                or `image` like CONCAT('%', #{image}, '%')
-            ]]>
-            </if>
-            <if test="runningConfig != null  and runningConfig != '' ">
-            <![CDATA[
-                or `running_config` like CONCAT('%', #{runningConfig}, '%')
-            ]]>
-            </if>
-            <if test="description != null  and description != '' ">
-            <![CDATA[
-                or `description` like CONCAT('%', #{description}, '%')
+                or `order` like CONCAT('%', #{order}, '%')
             ]]>
             </if>
             <if test="createTime != null  and createTime != '' ">
@@ -290,29 +265,24 @@
                 `id` = #{id},
             ]]>
             </if>
+            <if test="taskId != null  and taskId != '' ">
+            <![CDATA[
+                `task_id` = #{taskId},
+            ]]>
+            </if>
             <if test="appId != null  and appId != '' ">
             <![CDATA[
                 `app_id` = #{appId},
             ]]>
             </if>
-            <if test="versionNum != null  and versionNum != '' ">
+            <if test="appVersionId != null  and appVersionId != '' ">
             <![CDATA[
-                `version_num` = #{versionNum},
+                `app_version_id` = #{appVersionId},
             ]]>
             </if>
-            <if test="image != null  and image != '' ">
+            <if test="order != null  and order != '' ">
             <![CDATA[
-                `image` = #{image},
-            ]]>
-            </if>
-            <if test="runningConfig != null  and runningConfig != '' ">
-            <![CDATA[
-                `running_config` = #{runningConfig},
-            ]]>
-            </if>
-            <if test="description != null  and description != '' ">
-            <![CDATA[
-                `description` = #{description},
+                `order` = #{order},
             ]]>
             </if>
             <if test="createTime != null  and createTime != '' ">

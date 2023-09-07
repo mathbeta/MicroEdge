@@ -41,6 +41,7 @@ CREATE TABLE `edge_app_version` (
   `app_id` varchar(32) NOT NULL COMMENT '应用id',
   `version_num` varchar(128) NOT NULL COMMENT '版本号',
   `image` varchar(256) DEFAULT NULL COMMENT '镜像名称',
+  `running_config` text CHARACTER SET utf8 NOT NULL COMMENT 'json格式容器运行配置，用于启动docker容器。\r\nenv，环境变量，格式["a=1", "b=2"]\r\nportMappings，端口映射，格式["8080:80", "6443:443"]\r\nvolumeMappings，卷映射，格式["/path/on/host:/path/on/container"]',
   `description` text COMMENT '描述',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
@@ -70,3 +71,48 @@ CREATE TABLE `edge_node_app` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='节点应用关联表';
+
+-- test.edge_app_task_config definition
+
+CREATE TABLE `edge_app_task_config` (
+  `id` varchar(32) NOT NULL COMMENT 'id',
+  `task_id` varchar(64) CHARACTER SET utf8 NOT NULL COMMENT '运维任务id',
+  `app_id` varchar(64) CHARACTER SET utf8 NOT NULL COMMENT '应用id',
+  `app_version_id` varchar(64) CHARACTER SET utf8 NOT NULL COMMENT '目标应用版本id',
+  `order` int(11) DEFAULT NULL COMMENT '应用运维任务执行顺序',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='应用操作任务配置信息';
+
+
+-- test.edge_app_task_detail definition
+
+CREATE TABLE `edge_app_task_detail` (
+  `id` varchar(32) NOT NULL COMMENT 'id',
+  `node_id` varchar(64) CHARACTER SET utf8 NOT NULL COMMENT '节点id',
+  `app_id` varchar(64) CHARACTER SET utf8 NOT NULL COMMENT '应用id',
+  `version_id` varchar(64) CHARACTER SET utf8 DEFAULT NULL COMMENT '应用版本id',
+  `task_id` varchar(64) CHARACTER SET utf8 NOT NULL COMMENT '运维任务id',
+  `accepted` tinyint(1) DEFAULT NULL COMMENT '用户是否已接受，仅升级版本任务使用',
+  `status` int(11) NOT NULL COMMENT '当前运维状态，0-待升级；1-升级中；2-升级结束；3-还原中；4-还原结束；5-删除中；6-删除结束；7-部署中；8-部署结束；',
+  `result` int(11) DEFAULT NULL COMMENT '运维结果，0-成功，1-失败',
+  `reason` text CHARACTER SET utf8 COMMENT '运维结果原因',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='运维任务明细信息';
+
+
+-- test.edge_app_task_info definition
+
+CREATE TABLE `edge_app_task_info` (
+  `id` varchar(32) NOT NULL COMMENT 'id',
+  `summary` text CHARACTER SET utf8 COMMENT '任务概述',
+  `type` int(11) NOT NULL COMMENT '任务类型：0-重启；1-关闭；2-升级',
+  `status` int(11) NOT NULL COMMENT '任务状态，0-待执行；1-执行中；2-执行结束',
+  `result` int(11) DEFAULT NULL COMMENT '升级结果，0-成功，1-失败',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='主机应用运维任务信息';
+
+
+
