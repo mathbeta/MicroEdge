@@ -1,2 +1,2 @@
-# ThingsHub
-IoT platform for ordinary scenarios!
+# MicroEdge
+Edge Computing platform!
