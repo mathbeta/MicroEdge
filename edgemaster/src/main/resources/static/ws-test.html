@@ -1,0 +1,32 @@
+<script>
+     var websocket = null;
+
+    if('WebSocket' in window){
+        websocket = new WebSocket("ws://127.0.0.1:8090/master/ws");
+    }
+
+    websocket.onopen = function(){
+        console.log("onopen");
+        websocket.send("send hello");
+    }
+
+
+    websocket.onclose = function(){
+        console.log("onclose");
+    }
+
+
+    websocket.onmessage = function (event){
+        console.log("receive "+event.data);
+    }
+
+
+    websocket.onerror = function(e){
+        console.log("onerror ");
+        console.log(e);
+    }
+
+    window.onbeforeunload = function () {
+        websocket.close(num);
+    }
+</script>

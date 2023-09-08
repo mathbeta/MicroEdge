@@ -5,6 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 /**
  * edge master程序入口
@@ -14,7 +15,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  */
 @SpringBootApplication(scanBasePackages = "com.mathbeta.microedge")
 @MapperScan("com.mathbeta.microedge.mapper")
-@ServletComponentScan
+@EnableWebSocket
 @EnableKnife4j
 public class MasterApp {
     public static void main(String[] args) {
