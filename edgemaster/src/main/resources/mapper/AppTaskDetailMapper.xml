@@ -88,52 +88,52 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` = #{id}
             ]]>
             </if>
-            <if test="nodeId != null  and nodeId != '' ">
+            <if test="nodeId != null">
             <![CDATA[
                 and `node_id` = #{nodeId}
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 and `app_id` = #{appId}
             ]]>
             </if>
-            <if test="versionId != null  and versionId != '' ">
+            <if test="versionId != null">
             <![CDATA[
                 and `version_id` = #{versionId}
             ]]>
             </if>
-            <if test="taskId != null  and taskId != '' ">
+            <if test="taskId != null">
             <![CDATA[
                 and `task_id` = #{taskId}
             ]]>
             </if>
-            <if test="accepted != null  and accepted != '' ">
+            <if test="accepted != null">
             <![CDATA[
                 and `accepted` = #{accepted}
             ]]>
             </if>
-            <if test="status != null  and status != '' ">
+            <if test="status != null">
             <![CDATA[
                 and `status` = #{status}
             ]]>
             </if>
-            <if test="result != null  and result != '' ">
+            <if test="result != null">
             <![CDATA[
                 and `result` = #{result}
             ]]>
             </if>
-            <if test="reason != null  and reason != '' ">
+            <if test="reason != null">
             <![CDATA[
                 and `reason` = #{reason}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` = #{createTime}
             ]]>
@@ -160,52 +160,52 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` = #{id}
             ]]>
             </if>
-            <if test="nodeId != null  and nodeId != '' ">
+            <if test="nodeId != null">
             <![CDATA[
                 or `node_id` = #{nodeId}
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 or `app_id` = #{appId}
             ]]>
             </if>
-            <if test="versionId != null  and versionId != '' ">
+            <if test="versionId != null">
             <![CDATA[
                 or `version_id` = #{versionId}
             ]]>
             </if>
-            <if test="taskId != null  and taskId != '' ">
+            <if test="taskId != null">
             <![CDATA[
                 or `task_id` = #{taskId}
             ]]>
             </if>
-            <if test="accepted != null  and accepted != '' ">
+            <if test="accepted != null">
             <![CDATA[
                 or `accepted` = #{accepted}
             ]]>
             </if>
-            <if test="status != null  and status != '' ">
+            <if test="status != null">
             <![CDATA[
                 or `status` = #{status}
             ]]>
             </if>
-            <if test="result != null  and result != '' ">
+            <if test="result != null">
             <![CDATA[
                 or `result` = #{result}
             ]]>
             </if>
-            <if test="reason != null  and reason != '' ">
+            <if test="reason != null">
             <![CDATA[
                 or `reason` = #{reason}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` = #{createTime}
             ]]>
@@ -232,52 +232,52 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="nodeId != null  and nodeId != '' ">
+            <if test="nodeId != null">
             <![CDATA[
                 and `node_id` like CONCAT('%', #{nodeId}, '%')
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 and `app_id` like CONCAT('%', #{appId}, '%')
             ]]>
             </if>
-            <if test="versionId != null  and versionId != '' ">
+            <if test="versionId != null">
             <![CDATA[
                 and `version_id` like CONCAT('%', #{versionId}, '%')
             ]]>
             </if>
-            <if test="taskId != null  and taskId != '' ">
+            <if test="taskId != null">
             <![CDATA[
                 and `task_id` like CONCAT('%', #{taskId}, '%')
             ]]>
             </if>
-            <if test="accepted != null  and accepted != '' ">
+            <if test="accepted != null">
             <![CDATA[
                 and `accepted` like CONCAT('%', #{accepted}, '%')
             ]]>
             </if>
-            <if test="status != null  and status != '' ">
+            <if test="status != null">
             <![CDATA[
                 and `status` like CONCAT('%', #{status}, '%')
             ]]>
             </if>
-            <if test="result != null  and result != '' ">
+            <if test="result != null">
             <![CDATA[
                 and `result` like CONCAT('%', #{result}, '%')
             ]]>
             </if>
-            <if test="reason != null  and reason != '' ">
+            <if test="reason != null">
             <![CDATA[
                 and `reason` like CONCAT('%', #{reason}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` like CONCAT('%', #{createTime}, '%')
             ]]>
@@ -304,52 +304,52 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="nodeId != null  and nodeId != '' ">
+            <if test="nodeId != null">
             <![CDATA[
                 or `node_id` like CONCAT('%', #{nodeId}, '%')
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 or `app_id` like CONCAT('%', #{appId}, '%')
             ]]>
             </if>
-            <if test="versionId != null  and versionId != '' ">
+            <if test="versionId != null">
             <![CDATA[
                 or `version_id` like CONCAT('%', #{versionId}, '%')
             ]]>
             </if>
-            <if test="taskId != null  and taskId != '' ">
+            <if test="taskId != null">
             <![CDATA[
                 or `task_id` like CONCAT('%', #{taskId}, '%')
             ]]>
             </if>
-            <if test="accepted != null  and accepted != '' ">
+            <if test="accepted != null">
             <![CDATA[
                 or `accepted` like CONCAT('%', #{accepted}, '%')
             ]]>
             </if>
-            <if test="status != null  and status != '' ">
+            <if test="status != null">
             <![CDATA[
                 or `status` like CONCAT('%', #{status}, '%')
             ]]>
             </if>
-            <if test="result != null  and result != '' ">
+            <if test="result != null">
             <![CDATA[
                 or `result` like CONCAT('%', #{result}, '%')
             ]]>
             </if>
-            <if test="reason != null  and reason != '' ">
+            <if test="reason != null">
             <![CDATA[
                 or `reason` like CONCAT('%', #{reason}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` like CONCAT('%', #{createTime}, '%')
             ]]>
@@ -360,52 +360,52 @@
     <!--更新操作-->
     <sql id="sql_update">
         <set>
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 `id` = #{id},
             ]]>
             </if>
-            <if test="nodeId != null  and nodeId != '' ">
+            <if test="nodeId != null">
             <![CDATA[
                 `node_id` = #{nodeId},
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 `app_id` = #{appId},
             ]]>
             </if>
-            <if test="versionId != null  and versionId != '' ">
+            <if test="versionId != null">
             <![CDATA[
                 `version_id` = #{versionId},
             ]]>
             </if>
-            <if test="taskId != null  and taskId != '' ">
+            <if test="taskId != null">
             <![CDATA[
                 `task_id` = #{taskId},
             ]]>
             </if>
-            <if test="accepted != null  and accepted != '' ">
+            <if test="accepted != null">
             <![CDATA[
                 `accepted` = #{accepted},
             ]]>
             </if>
-            <if test="status != null  and status != '' ">
+            <if test="status != null">
             <![CDATA[
                 `status` = #{status},
             ]]>
             </if>
-            <if test="result != null  and result != '' ">
+            <if test="result != null">
             <![CDATA[
                 `result` = #{result},
             ]]>
             </if>
-            <if test="reason != null  and reason != '' ">
+            <if test="reason != null">
             <![CDATA[
                 `reason` = #{reason},
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 `create_time` = #{createTime},
             ]]>

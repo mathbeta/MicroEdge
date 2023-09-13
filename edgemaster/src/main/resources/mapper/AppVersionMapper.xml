@@ -82,37 +82,37 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` = #{id}
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 and `app_id` = #{appId}
             ]]>
             </if>
-            <if test="versionNum != null  and versionNum != '' ">
+            <if test="versionNum != null">
             <![CDATA[
                 and `version_num` = #{versionNum}
             ]]>
             </if>
-            <if test="image != null  and image != '' ">
+            <if test="image != null">
             <![CDATA[
                 and `image` = #{image}
             ]]>
             </if>
-            <if test="runningConfig != null  and runningConfig != '' ">
+            <if test="runningConfig != null">
             <![CDATA[
                 and `running_config` = #{runningConfig}
             ]]>
             </if>
-            <if test="description != null  and description != '' ">
+            <if test="description != null">
             <![CDATA[
                 and `description` = #{description}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` = #{createTime}
             ]]>
@@ -136,37 +136,37 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` = #{id}
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 or `app_id` = #{appId}
             ]]>
             </if>
-            <if test="versionNum != null  and versionNum != '' ">
+            <if test="versionNum != null">
             <![CDATA[
                 or `version_num` = #{versionNum}
             ]]>
             </if>
-            <if test="image != null  and image != '' ">
+            <if test="image != null">
             <![CDATA[
                 or `image` = #{image}
             ]]>
             </if>
-            <if test="runningConfig != null  and runningConfig != '' ">
+            <if test="runningConfig != null">
             <![CDATA[
                 or `running_config` = #{runningConfig}
             ]]>
             </if>
-            <if test="description != null  and description != '' ">
+            <if test="description != null">
             <![CDATA[
                 or `description` = #{description}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` = #{createTime}
             ]]>
@@ -190,37 +190,37 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 and `app_id` like CONCAT('%', #{appId}, '%')
             ]]>
             </if>
-            <if test="versionNum != null  and versionNum != '' ">
+            <if test="versionNum != null">
             <![CDATA[
                 and `version_num` like CONCAT('%', #{versionNum}, '%')
             ]]>
             </if>
-            <if test="image != null  and image != '' ">
+            <if test="image != null">
             <![CDATA[
                 and `image` like CONCAT('%', #{image}, '%')
             ]]>
             </if>
-            <if test="runningConfig != null  and runningConfig != '' ">
+            <if test="runningConfig != null">
             <![CDATA[
                 and `running_config` like CONCAT('%', #{runningConfig}, '%')
             ]]>
             </if>
-            <if test="description != null  and description != '' ">
+            <if test="description != null">
             <![CDATA[
                 and `description` like CONCAT('%', #{description}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` like CONCAT('%', #{createTime}, '%')
             ]]>
@@ -244,37 +244,37 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 or `app_id` like CONCAT('%', #{appId}, '%')
             ]]>
             </if>
-            <if test="versionNum != null  and versionNum != '' ">
+            <if test="versionNum != null">
             <![CDATA[
                 or `version_num` like CONCAT('%', #{versionNum}, '%')
             ]]>
             </if>
-            <if test="image != null  and image != '' ">
+            <if test="image != null">
             <![CDATA[
                 or `image` like CONCAT('%', #{image}, '%')
             ]]>
             </if>
-            <if test="runningConfig != null  and runningConfig != '' ">
+            <if test="runningConfig != null">
             <![CDATA[
                 or `running_config` like CONCAT('%', #{runningConfig}, '%')
             ]]>
             </if>
-            <if test="description != null  and description != '' ">
+            <if test="description != null">
             <![CDATA[
                 or `description` like CONCAT('%', #{description}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` like CONCAT('%', #{createTime}, '%')
             ]]>
@@ -285,37 +285,37 @@
     <!--更新操作-->
     <sql id="sql_update">
         <set>
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 `id` = #{id},
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 `app_id` = #{appId},
             ]]>
             </if>
-            <if test="versionNum != null  and versionNum != '' ">
+            <if test="versionNum != null">
             <![CDATA[
                 `version_num` = #{versionNum},
             ]]>
             </if>
-            <if test="image != null  and image != '' ">
+            <if test="image != null">
             <![CDATA[
                 `image` = #{image},
             ]]>
             </if>
-            <if test="runningConfig != null  and runningConfig != '' ">
+            <if test="runningConfig != null">
             <![CDATA[
                 `running_config` = #{runningConfig},
             ]]>
             </if>
-            <if test="description != null  and description != '' ">
+            <if test="description != null">
             <![CDATA[
                 `description` = #{description},
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 `create_time` = #{createTime},
             ]]>

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pair<L,R> {
+public class Pair<L, R> {
     private L left;
     private R right;
 }

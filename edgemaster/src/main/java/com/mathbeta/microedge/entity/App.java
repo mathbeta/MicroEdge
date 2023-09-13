@@ -1,7 +1,8 @@
 package com.mathbeta.microedge.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.mathbeta.alphaboot.annotation.KeyConfig;
-import com.mathbeta.alphaboot.entity.BaseEntity;
 import com.mathbeta.alphaboot.entity.BaseEntityWithAssignedId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,17 +11,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import java.util.Date;
+
 /**
-* 应用信息
-*
-* Created by xiuyou.xu on 2023/09/07.
-*/
+ * 应用信息
+ *
+ * @author xuxiuyou
+ * @date 2023/09/07
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,19 +28,19 @@ import java.util.Date;
 @XmlAccessorType(XmlAccessType.FIELD)
 @KeyConfig(type = 1)
 @TableName("edge_app")
-public class App extends  BaseEntityWithAssignedId  {
+public class App extends BaseEntityWithAssignedId {
 
-    
+
     @ApiModelProperty(name = "name", value = "应用名称")
     @TableField("name")
     private String name;
 
-    
+
     @ApiModelProperty(name = "description", value = "描述")
     @TableField("description")
     private String description;
 
-    
+
     @ApiModelProperty(name = "nsId", value = "命名空间id")
     @TableField("ns_id")
     private String nsId;

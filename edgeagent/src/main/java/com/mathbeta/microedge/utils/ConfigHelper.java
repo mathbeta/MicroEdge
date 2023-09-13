@@ -15,8 +15,8 @@ import java.util.Map;
  */
 @Slf4j
 public class ConfigHelper {
-    private Map<String, Object> config;
     private static ConfigHelper instance = new ConfigHelper();
+    private Map<String, Object> config;
 
     private ConfigHelper() {
         Yaml yaml = new Yaml();

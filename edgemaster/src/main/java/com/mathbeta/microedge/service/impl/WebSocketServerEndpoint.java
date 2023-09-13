@@ -1,6 +1,12 @@
 package com.mathbeta.microedge.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.mathbeta.microedge.entity.BaseMsg;
+import com.mathbeta.microedge.entity.HeartbeatMsg;
+import com.mathbeta.microedge.entity.IdMsg;
+import com.mathbeta.microedge.utils.WebSocketManager;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.jetty.websocket.jsr356.JsrSession;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -25,12 +31,50 @@ public class WebSocketServerEndpoint {
     @OnClose
     public void onClose(Session session) {
         log.info("Client {} closed", session.getId());
+        agentOffline(session);
     }
 
     @OnMessage
     public void onMessage(String msg, Session session) {
-        log.info("Client {} send message {}", session.getId(), msg);
-        session.getAsyncRemote().sendText(msg);
+        JsrSession js = (JsrSession) session;
+        log.info("Received msg {} from {}", msg, js.getWebSocketSession().getRemoteAddress());
+        BaseMsg baseMsg = JSON.parseObject(msg, BaseMsg.class);
+        if (null != baseMsg) {
+            switch (baseMsg.getType()) {
+                case BaseMsg.TYPE_ID:
+                    agentOnline(msg, session);
+                    break;
+
+                case BaseMsg.TYPE_HEARTBEAT:
+                    session.getAsyncRemote().sendText(JSON.toJSONString(HeartbeatMsg.builder()
+                            .type(BaseMsg.TYPE_HEARTBEAT)
+                            .build()));
+                    break;
+
+                default:
+                    log.warn("Unknown message type {} of msg {}", baseMsg.getType(), msg);
+            }
+        }
+    }
+
+    /**
+     * agent上线
+     *
+     * @param msg
+     * @param session
+     */
+    private void agentOnline(String msg, Session session) {
+        IdMsg idMsg = JSON.parseObject(msg, IdMsg.class);
+        WebSocketManager.getManager().addClient(idMsg.getAgentId(), session);
+    }
+
+    /**
+     * agent下线
+     *
+     * @param session
+     */
+    private void agentOffline(Session session) {
+        WebSocketManager.getManager().removeClient(session);
     }
 
     @OnError
@@ -38,6 +82,7 @@ public class WebSocketServerEndpoint {
         log.error("Client {} error", session.getId(), t);
         try {
             session.close();
+            agentOffline(session);
         } catch (IOException e) {
             log.error("Failed to close client {} in OnError", session.getId(), e);
         }

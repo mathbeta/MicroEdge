@@ -29,7 +29,7 @@ public class DockerUtilTest {
         assertNotNull(DockerUtil.run("nginx:latest",
                 "nginx-test",
                 Lists.newArrayList("a=1"),
-                Lists.newArrayList("8088:80","8089:80"),
+                Lists.newArrayList("8088:80", "8089:80"),
                 Lists.newArrayList("/d/etc:/tmp/test")));
     }
 }

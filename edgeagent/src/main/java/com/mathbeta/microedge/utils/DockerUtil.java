@@ -25,14 +25,19 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class DockerUtil {
-    private static DockerClient dockerClient =
-            DockerClientBuilder.getInstance()
-                    .withDockerHttpClient(new JerseyDockerHttpClient.Builder()
-                            .dockerHost(URI.create(SystemUtils.IS_OS_WINDOWS ? "tcp://127.0.0.1:2375" :
-                                    (SystemUtils.IS_OS_LINUX ? "/var/run/docker.sock" : "")))
-                            .build())
-                    .build();
+    private static DockerClient dockerClient = DockerClientBuilder.getInstance()
+            .withDockerHttpClient(new JerseyDockerHttpClient.Builder()
+                    .dockerHost(URI.create(SystemUtils.IS_OS_LINUX
+                            ? "unix:///var/run/docker.sock"
+                            : "tcp://127.0.0.1:2375"))
+                    .build()).build();
 
+    /**
+     * 列出容器
+     *
+     * @param all 是否列出所有容器，false表示只列出running状态的容器
+     * @return
+     */
     public static List<String> ps(boolean all) {
         List<Container> containers = dockerClient.listContainersCmd().withShowAll(all).exec();
         if (CollectionUtils.isNotEmpty(containers)) {
@@ -51,7 +56,7 @@ public class DockerUtil {
     }
 
     /**
-     * 启动容器
+     * 停止容器
      *
      * @param containerId
      */
@@ -74,7 +79,7 @@ public class DockerUtil {
      * @param containerId
      */
     public static void removeContainer(String containerId) {
-        dockerClient.removeContainerCmd(containerId).exec();
+        dockerClient.removeContainerCmd(containerId).withForce(true).withRemoveVolumes(true).exec();
     }
 
     /**
@@ -93,7 +98,10 @@ public class DockerUtil {
                              List<String> portMappings,
                              List<String> volumeMappings) {
         CreateContainerCmd cmd = dockerClient.createContainerCmd(image)
-                .withName(containerName).withEnv(envVars);
+                .withName(containerName);
+        if (CollectionUtils.isNotEmpty(envVars)) {
+            cmd.withEnv(envVars);
+        }
 
         Ports ports = new Ports();
         List<ExposedPort> exposedPorts = Lists.newArrayList();
@@ -122,7 +130,8 @@ public class DockerUtil {
             cmd.withExposedPorts(exposedPorts);
         }
 
-        HostConfig hostConfig = HostConfig.newHostConfig();
+        HostConfig hostConfig = HostConfig.newHostConfig().withPortBindings(ports);
+        cmd.withHostConfig(hostConfig);
         List<Mount> volumeMounts = Lists.newArrayList();
         if (CollectionUtils.isNotEmpty(volumeMappings)) {
             volumeMappings.forEach(mapping -> {
@@ -151,31 +160,34 @@ public class DockerUtil {
                         .withReadOnly(readOnly);
                 volumeMounts.add(mount);
             });
-            hostConfig.withPortBindings(ports).withMounts(volumeMounts);
-            cmd.withHostConfig(hostConfig);
+            hostConfig.withMounts(volumeMounts);
         }
 
         CreateContainerResponse resp = cmd.exec();
         String id = resp.getId();
         dockerClient.startContainerCmd(id).exec();
-        Optional<String> statusOptional = getContainerStatus(id);
+        Optional<String> statusOptional = status(id);
         String status = statusOptional.orElse("unknown");
         log.info("Running image {} container {} status {}", image, id, status);
 
         return id;
     }
 
-    public static Optional<String> getContainerStatus(String containerId) {
+    /**
+     * 获取容器状态
+     *
+     * @param containerId
+     * @return
+     */
+    public static Optional<String> status(String containerId) {
         Optional<String> result = Optional.empty();
         try {
-            log.debug("Start get Container status containerID: {}", containerId);
             InspectContainerResponse inspectInfo = dockerClient.inspectContainerCmd(containerId).exec();
             InspectContainerResponse.ContainerState state = inspectInfo.getState();
             result = Optional.ofNullable(state.getStatus());
-        } catch (Exception exp) {
-            log.error("Error getting container status", exp);
+        } catch (Exception e) {
+            log.error("Error getting container status", e);
         }
-        log.debug("Finished get Container status containerID: {}", containerId);
         return result;
     }
 }

@@ -9,14 +9,15 @@
         <result column="version_id" property="versionId" jdbcType="VARCHAR"/>
         <result column="node_id" property="nodeId" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="enabled" property="enabled" jdbcType="TINYINT"/>
     </resultMap>
 
     <!--新增操作 -->
     <insert id="create" parameterType="com.mathbeta.microedge.entity.NodeApp">
         insert into edge_node_app
-        (`id`,`app_id`,`version_id`,`node_id`,`create_time`)
+        (`id`,`app_id`,`version_id`,`node_id`,`create_time`,`enabled`)
         values
-        (#{id},#{appId},#{versionId},#{nodeId},#{createTime})
+        (#{id},#{appId},#{versionId},#{nodeId},#{createTime},#{enabled})
     </insert>
 
     <!--更新操作-->
@@ -61,7 +62,7 @@
 
     <!--查询字段-->
     <sql id="sql_select">
-        SELECT `id`,`app_id`,`version_id`,`node_id`,`create_time`        from edge_node_app s
+        SELECT `id`,`app_id`,`version_id`,`node_id`,`create_time`,`enabled`        from edge_node_app s
     </sql>
 
     <!--查询条件-->
@@ -75,32 +76,38 @@
 				or `version_id` like CONCAT('%', #{search}, '%')
 				or `node_id` like CONCAT('%', #{search}, '%')
 				or `create_time` like CONCAT('%', #{search}, '%')
+				or `enabled` like CONCAT('%', #{search}, '%')
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` = #{id}
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 and `app_id` = #{appId}
             ]]>
             </if>
-            <if test="versionId != null  and versionId != '' ">
+            <if test="versionId != null">
             <![CDATA[
                 and `version_id` = #{versionId}
             ]]>
             </if>
-            <if test="nodeId != null  and nodeId != '' ">
+            <if test="nodeId != null">
             <![CDATA[
                 and `node_id` = #{nodeId}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` = #{createTime}
+            ]]>
+            </if>
+            <if test="enabled != null">
+            <![CDATA[
+                and `enabled` = #{enabled}
             ]]>
             </if>
         </where>
@@ -117,32 +124,38 @@
 				or `version_id` like CONCAT('%', #{search}, '%')
 				or `node_id` like CONCAT('%', #{search}, '%')
 				or `create_time` like CONCAT('%', #{search}, '%')
+				or `enabled` like CONCAT('%', #{search}, '%')
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` = #{id}
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 or `app_id` = #{appId}
             ]]>
             </if>
-            <if test="versionId != null  and versionId != '' ">
+            <if test="versionId != null">
             <![CDATA[
                 or `version_id` = #{versionId}
             ]]>
             </if>
-            <if test="nodeId != null  and nodeId != '' ">
+            <if test="nodeId != null">
             <![CDATA[
                 or `node_id` = #{nodeId}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` = #{createTime}
+            ]]>
+            </if>
+            <if test="enabled != null">
+            <![CDATA[
+                or `enabled` = #{enabled}
             ]]>
             </if>
         </where>
@@ -159,32 +172,38 @@
 				or `version_id` like CONCAT('%', #{search}, '%')
 				or `node_id` like CONCAT('%', #{search}, '%')
 				or `create_time` like CONCAT('%', #{search}, '%')
+				or `enabled` like CONCAT('%', #{search}, '%')
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 and `app_id` like CONCAT('%', #{appId}, '%')
             ]]>
             </if>
-            <if test="versionId != null  and versionId != '' ">
+            <if test="versionId != null">
             <![CDATA[
                 and `version_id` like CONCAT('%', #{versionId}, '%')
             ]]>
             </if>
-            <if test="nodeId != null  and nodeId != '' ">
+            <if test="nodeId != null">
             <![CDATA[
                 and `node_id` like CONCAT('%', #{nodeId}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` like CONCAT('%', #{createTime}, '%')
+            ]]>
+            </if>
+            <if test="enabled != null">
+            <![CDATA[
+                and `enabled` like CONCAT('%', #{enabled}, '%')
             ]]>
             </if>
         </where>
@@ -201,32 +220,38 @@
 				or `version_id` like CONCAT('%', #{search}, '%')
 				or `node_id` like CONCAT('%', #{search}, '%')
 				or `create_time` like CONCAT('%', #{search}, '%')
+				or `enabled` like CONCAT('%', #{search}, '%')
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 or `app_id` like CONCAT('%', #{appId}, '%')
             ]]>
             </if>
-            <if test="versionId != null  and versionId != '' ">
+            <if test="versionId != null">
             <![CDATA[
                 or `version_id` like CONCAT('%', #{versionId}, '%')
             ]]>
             </if>
-            <if test="nodeId != null  and nodeId != '' ">
+            <if test="nodeId != null">
             <![CDATA[
                 or `node_id` like CONCAT('%', #{nodeId}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` like CONCAT('%', #{createTime}, '%')
+            ]]>
+            </if>
+            <if test="enabled != null">
+            <![CDATA[
+                or `enabled` like CONCAT('%', #{enabled}, '%')
             ]]>
             </if>
         </where>
@@ -235,29 +260,34 @@
     <!--更新操作-->
     <sql id="sql_update">
         <set>
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 `id` = #{id},
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 `app_id` = #{appId},
             ]]>
             </if>
-            <if test="versionId != null  and versionId != '' ">
+            <if test="versionId != null">
             <![CDATA[
                 `version_id` = #{versionId},
             ]]>
             </if>
-            <if test="nodeId != null  and nodeId != '' ">
+            <if test="nodeId != null">
             <![CDATA[
                 `node_id` = #{nodeId},
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 `create_time` = #{createTime},
+            ]]>
+            </if>
+            <if test="enabled != null">
+            <![CDATA[
+                `enabled` = #{enabled},
             ]]>
             </if>
         </set>

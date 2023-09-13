@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<!-- 主机应用运维任务信息 -->
+<!-- 节点应用运维任务信息 -->
 <mapper namespace="com.mathbeta.microedge.mapper.AppTaskInfoMapper">
     <resultMap type="com.mathbeta.microedge.entity.AppTaskInfo" id="appTaskInfoResultMap">
         <result column="id" property="id" jdbcType="VARCHAR"/>
@@ -80,32 +80,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` = #{id}
             ]]>
             </if>
-            <if test="summary != null  and summary != '' ">
+            <if test="summary != null">
             <![CDATA[
                 and `summary` = #{summary}
             ]]>
             </if>
-            <if test="type != null  and type != '' ">
+            <if test="type != null">
             <![CDATA[
                 and `type` = #{type}
             ]]>
             </if>
-            <if test="status != null  and status != '' ">
+            <if test="status != null">
             <![CDATA[
                 and `status` = #{status}
             ]]>
             </if>
-            <if test="result != null  and result != '' ">
+            <if test="result != null">
             <![CDATA[
                 and `result` = #{result}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` = #{createTime}
             ]]>
@@ -128,32 +128,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` = #{id}
             ]]>
             </if>
-            <if test="summary != null  and summary != '' ">
+            <if test="summary != null">
             <![CDATA[
                 or `summary` = #{summary}
             ]]>
             </if>
-            <if test="type != null  and type != '' ">
+            <if test="type != null">
             <![CDATA[
                 or `type` = #{type}
             ]]>
             </if>
-            <if test="status != null  and status != '' ">
+            <if test="status != null">
             <![CDATA[
                 or `status` = #{status}
             ]]>
             </if>
-            <if test="result != null  and result != '' ">
+            <if test="result != null">
             <![CDATA[
                 or `result` = #{result}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` = #{createTime}
             ]]>
@@ -176,32 +176,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="summary != null  and summary != '' ">
+            <if test="summary != null">
             <![CDATA[
                 and `summary` like CONCAT('%', #{summary}, '%')
             ]]>
             </if>
-            <if test="type != null  and type != '' ">
+            <if test="type != null">
             <![CDATA[
                 and `type` like CONCAT('%', #{type}, '%')
             ]]>
             </if>
-            <if test="status != null  and status != '' ">
+            <if test="status != null">
             <![CDATA[
                 and `status` like CONCAT('%', #{status}, '%')
             ]]>
             </if>
-            <if test="result != null  and result != '' ">
+            <if test="result != null">
             <![CDATA[
                 and `result` like CONCAT('%', #{result}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` like CONCAT('%', #{createTime}, '%')
             ]]>
@@ -224,32 +224,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="summary != null  and summary != '' ">
+            <if test="summary != null">
             <![CDATA[
                 or `summary` like CONCAT('%', #{summary}, '%')
             ]]>
             </if>
-            <if test="type != null  and type != '' ">
+            <if test="type != null">
             <![CDATA[
                 or `type` like CONCAT('%', #{type}, '%')
             ]]>
             </if>
-            <if test="status != null  and status != '' ">
+            <if test="status != null">
             <![CDATA[
                 or `status` like CONCAT('%', #{status}, '%')
             ]]>
             </if>
-            <if test="result != null  and result != '' ">
+            <if test="result != null">
             <![CDATA[
                 or `result` like CONCAT('%', #{result}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` like CONCAT('%', #{createTime}, '%')
             ]]>
@@ -260,32 +260,32 @@
     <!--更新操作-->
     <sql id="sql_update">
         <set>
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 `id` = #{id},
             ]]>
             </if>
-            <if test="summary != null  and summary != '' ">
+            <if test="summary != null">
             <![CDATA[
                 `summary` = #{summary},
             ]]>
             </if>
-            <if test="type != null  and type != '' ">
+            <if test="type != null">
             <![CDATA[
                 `type` = #{type},
             ]]>
             </if>
-            <if test="status != null  and status != '' ">
+            <if test="status != null">
             <![CDATA[
                 `status` = #{status},
             ]]>
             </if>
-            <if test="result != null  and result != '' ">
+            <if test="result != null">
             <![CDATA[
                 `result` = #{result},
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 `create_time` = #{createTime},
             ]]>

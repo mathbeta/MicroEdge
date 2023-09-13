@@ -80,32 +80,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` = #{id}
             ]]>
             </if>
-            <if test="nsId != null  and nsId != '' ">
+            <if test="nsId != null">
             <![CDATA[
                 and `ns_id` = #{nsId}
             ]]>
             </if>
-            <if test="name != null  and name != '' ">
+            <if test="name != null">
             <![CDATA[
                 and `name` = #{name}
             ]]>
             </if>
-            <if test="ip != null  and ip != '' ">
+            <if test="ip != null">
             <![CDATA[
                 and `ip` = #{ip}
             ]]>
             </if>
-            <if test="token != null  and token != '' ">
+            <if test="token != null">
             <![CDATA[
                 and `token` = #{token}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` = #{createTime}
             ]]>
@@ -128,32 +128,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` = #{id}
             ]]>
             </if>
-            <if test="nsId != null  and nsId != '' ">
+            <if test="nsId != null">
             <![CDATA[
                 or `ns_id` = #{nsId}
             ]]>
             </if>
-            <if test="name != null  and name != '' ">
+            <if test="name != null">
             <![CDATA[
                 or `name` = #{name}
             ]]>
             </if>
-            <if test="ip != null  and ip != '' ">
+            <if test="ip != null">
             <![CDATA[
                 or `ip` = #{ip}
             ]]>
             </if>
-            <if test="token != null  and token != '' ">
+            <if test="token != null">
             <![CDATA[
                 or `token` = #{token}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` = #{createTime}
             ]]>
@@ -176,32 +176,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="nsId != null  and nsId != '' ">
+            <if test="nsId != null">
             <![CDATA[
                 and `ns_id` like CONCAT('%', #{nsId}, '%')
             ]]>
             </if>
-            <if test="name != null  and name != '' ">
+            <if test="name != null">
             <![CDATA[
                 and `name` like CONCAT('%', #{name}, '%')
             ]]>
             </if>
-            <if test="ip != null  and ip != '' ">
+            <if test="ip != null">
             <![CDATA[
                 and `ip` like CONCAT('%', #{ip}, '%')
             ]]>
             </if>
-            <if test="token != null  and token != '' ">
+            <if test="token != null">
             <![CDATA[
                 and `token` like CONCAT('%', #{token}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` like CONCAT('%', #{createTime}, '%')
             ]]>
@@ -224,32 +224,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="nsId != null  and nsId != '' ">
+            <if test="nsId != null">
             <![CDATA[
                 or `ns_id` like CONCAT('%', #{nsId}, '%')
             ]]>
             </if>
-            <if test="name != null  and name != '' ">
+            <if test="name != null">
             <![CDATA[
                 or `name` like CONCAT('%', #{name}, '%')
             ]]>
             </if>
-            <if test="ip != null  and ip != '' ">
+            <if test="ip != null">
             <![CDATA[
                 or `ip` like CONCAT('%', #{ip}, '%')
             ]]>
             </if>
-            <if test="token != null  and token != '' ">
+            <if test="token != null">
             <![CDATA[
                 or `token` like CONCAT('%', #{token}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` like CONCAT('%', #{createTime}, '%')
             ]]>
@@ -260,32 +260,32 @@
     <!--更新操作-->
     <sql id="sql_update">
         <set>
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 `id` = #{id},
             ]]>
             </if>
-            <if test="nsId != null  and nsId != '' ">
+            <if test="nsId != null">
             <![CDATA[
                 `ns_id` = #{nsId},
             ]]>
             </if>
-            <if test="name != null  and name != '' ">
+            <if test="name != null">
             <![CDATA[
                 `name` = #{name},
             ]]>
             </if>
-            <if test="ip != null  and ip != '' ">
+            <if test="ip != null">
             <![CDATA[
                 `ip` = #{ip},
             ]]>
             </if>
-            <if test="token != null  and token != '' ">
+            <if test="token != null">
             <![CDATA[
                 `token` = #{token},
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 `create_time` = #{createTime},
             ]]>

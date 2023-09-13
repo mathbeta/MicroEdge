@@ -80,32 +80,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` = #{id}
             ]]>
             </if>
-            <if test="taskId != null  and taskId != '' ">
+            <if test="taskId != null">
             <![CDATA[
                 and `task_id` = #{taskId}
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 and `app_id` = #{appId}
             ]]>
             </if>
-            <if test="appVersionId != null  and appVersionId != '' ">
+            <if test="appVersionId != null">
             <![CDATA[
                 and `app_version_id` = #{appVersionId}
             ]]>
             </if>
-            <if test="order != null  and order != '' ">
+            <if test="order != null">
             <![CDATA[
                 and `order` = #{order}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` = #{createTime}
             ]]>
@@ -128,32 +128,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` = #{id}
             ]]>
             </if>
-            <if test="taskId != null  and taskId != '' ">
+            <if test="taskId != null">
             <![CDATA[
                 or `task_id` = #{taskId}
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 or `app_id` = #{appId}
             ]]>
             </if>
-            <if test="appVersionId != null  and appVersionId != '' ">
+            <if test="appVersionId != null">
             <![CDATA[
                 or `app_version_id` = #{appVersionId}
             ]]>
             </if>
-            <if test="order != null  and order != '' ">
+            <if test="order != null">
             <![CDATA[
                 or `order` = #{order}
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` = #{createTime}
             ]]>
@@ -176,32 +176,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 and `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="taskId != null  and taskId != '' ">
+            <if test="taskId != null">
             <![CDATA[
                 and `task_id` like CONCAT('%', #{taskId}, '%')
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 and `app_id` like CONCAT('%', #{appId}, '%')
             ]]>
             </if>
-            <if test="appVersionId != null  and appVersionId != '' ">
+            <if test="appVersionId != null">
             <![CDATA[
                 and `app_version_id` like CONCAT('%', #{appVersionId}, '%')
             ]]>
             </if>
-            <if test="order != null  and order != '' ">
+            <if test="order != null">
             <![CDATA[
                 and `order` like CONCAT('%', #{order}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 and `create_time` like CONCAT('%', #{createTime}, '%')
             ]]>
@@ -224,32 +224,32 @@
                 )
             </if>
             -->
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 or `id` like CONCAT('%', #{id}, '%')
             ]]>
             </if>
-            <if test="taskId != null  and taskId != '' ">
+            <if test="taskId != null">
             <![CDATA[
                 or `task_id` like CONCAT('%', #{taskId}, '%')
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 or `app_id` like CONCAT('%', #{appId}, '%')
             ]]>
             </if>
-            <if test="appVersionId != null  and appVersionId != '' ">
+            <if test="appVersionId != null">
             <![CDATA[
                 or `app_version_id` like CONCAT('%', #{appVersionId}, '%')
             ]]>
             </if>
-            <if test="order != null  and order != '' ">
+            <if test="order != null">
             <![CDATA[
                 or `order` like CONCAT('%', #{order}, '%')
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 or `create_time` like CONCAT('%', #{createTime}, '%')
             ]]>
@@ -260,32 +260,32 @@
     <!--更新操作-->
     <sql id="sql_update">
         <set>
-            <if test="id != null  and id != '' ">
+            <if test="id != null">
             <![CDATA[
                 `id` = #{id},
             ]]>
             </if>
-            <if test="taskId != null  and taskId != '' ">
+            <if test="taskId != null">
             <![CDATA[
                 `task_id` = #{taskId},
             ]]>
             </if>
-            <if test="appId != null  and appId != '' ">
+            <if test="appId != null">
             <![CDATA[
                 `app_id` = #{appId},
             ]]>
             </if>
-            <if test="appVersionId != null  and appVersionId != '' ">
+            <if test="appVersionId != null">
             <![CDATA[
                 `app_version_id` = #{appVersionId},
             ]]>
             </if>
-            <if test="order != null  and order != '' ">
+            <if test="order != null">
             <![CDATA[
                 `order` = #{order},
             ]]>
             </if>
-            <if test="createTime != null  and createTime != '' ">
+            <if test="createTime != null">
             <![CDATA[
                 `create_time` = #{createTime},
             ]]>

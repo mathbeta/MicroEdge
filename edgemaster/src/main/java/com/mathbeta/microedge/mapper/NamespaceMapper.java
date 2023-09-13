@@ -5,7 +5,9 @@ import com.mathbeta.microedge.entity.Namespace;
 
 /**
  * 命名空间
- * Created by xiuyou.xu on 2023/09/07.
+ *
+ * @author xuxiuyou
+ * @date 2023/09/07
  */
 public interface NamespaceMapper extends IMapper<Namespace> {
 
