@@ -4,6 +4,7 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.command.CreateContainerCmd;
 import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.command.InspectContainerResponse;
+import com.github.dockerjava.api.exception.NotFoundException;
 import com.github.dockerjava.api.model.*;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.jaxrs.JerseyDockerHttpClient;
@@ -52,7 +53,11 @@ public class DockerUtil {
      * @param containerId
      */
     public static void startContainer(String containerId) {
-        dockerClient.startContainerCmd(containerId).exec();
+        try {
+            dockerClient.startContainerCmd(containerId).exec();
+        } catch (NotFoundException e) {
+            log.info("No such container {}", containerId);
+        }
     }
 
     /**
@@ -61,7 +66,11 @@ public class DockerUtil {
      * @param containerId
      */
     public static void stopContainer(String containerId) {
-        dockerClient.stopContainerCmd(containerId).exec();
+        try {
+            dockerClient.stopContainerCmd(containerId).exec();
+        } catch (NotFoundException e) {
+            log.info("No such container {}", containerId);
+        }
     }
 
     /**
@@ -70,7 +79,11 @@ public class DockerUtil {
      * @param containerId
      */
     public static void restartContainer(String containerId) {
-        dockerClient.restartContainerCmd(containerId).exec();
+        try {
+            dockerClient.restartContainerCmd(containerId).exec();
+        } catch (NotFoundException e) {
+            log.info("No such container {}", containerId);
+        }
     }
 
     /**
@@ -79,7 +92,11 @@ public class DockerUtil {
      * @param containerId
      */
     public static void removeContainer(String containerId) {
-        dockerClient.removeContainerCmd(containerId).withForce(true).withRemoveVolumes(true).exec();
+        try {
+            dockerClient.removeContainerCmd(containerId).withForce(true).withRemoveVolumes(true).exec();
+        } catch (NotFoundException e) {
+            log.info("No such container {}", containerId);
+        }
     }
 
     /**
@@ -185,6 +202,8 @@ public class DockerUtil {
             InspectContainerResponse inspectInfo = dockerClient.inspectContainerCmd(containerId).exec();
             InspectContainerResponse.ContainerState state = inspectInfo.getState();
             result = Optional.ofNullable(state.getStatus());
+        } catch (NotFoundException e) {
+            log.info("No such container {}", containerId);
         } catch (Exception e) {
             log.error("Error getting container status", e);
         }

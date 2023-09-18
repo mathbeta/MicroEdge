@@ -1,6 +1,7 @@
 package com.mathbeta.microedge.ws;
 
 import com.alibaba.fastjson.JSON;
+import com.mathbeta.microedge.config.Constants;
 import com.mathbeta.microedge.entity.*;
 import com.mathbeta.microedge.utils.AppManager;
 import com.mathbeta.microedge.utils.DockerUtil;
@@ -75,6 +76,7 @@ public class WebSocketMessageConsumer implements BiConsumer<WebSocketClient, Str
         AppManager.getManager().addInstance(containerName, AppInstance.builder()
                 .appName(runAppMsg.getAppName())
                 .containerId(id)
+                .status(Constants.APP_STATUS_RUNNING)
                 .containerName(containerName)
                 .image(runAppMsg.getImage())
                 .registryId(runAppMsg.getRegistryId())

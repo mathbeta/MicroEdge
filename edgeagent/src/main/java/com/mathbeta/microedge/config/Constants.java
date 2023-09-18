@@ -9,4 +9,9 @@ package com.mathbeta.microedge.config;
 public class Constants {
     public static final String CONTENT_TYPE_HEADER = "Content-Type";
     public static final String JSON_CONTENT_TYPE = "application/json";
+
+    public static final String APP_STATUS_RUNNING = "running";
+    public static final String APP_STATUS_STOPPED = "exited";
+    public static final String APP_STATUS_STARTING = "starting";
+    public static final String APP_STATUS_REMOVING = "removing";
 }

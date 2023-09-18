@@ -63,13 +63,17 @@ public class WebSocketManager {
      * @param agentId
      * @param msg
      */
-    public void sendMsg(String agentId, String msg) {
+    public boolean sendMsg(String agentId, String msg) {
         Session session = sessionMap.get(agentId);
         if (null != session) {
-            log.debug("Sending message {} to client {}", msg,
+            log.info("Sending message [{}] to client [{}]", msg,
                     ((JsrSession) session).getWebSocketSession().getRemoteAddress());
             session.getAsyncRemote().sendText(msg);
+            return true;
+        } else {
+            log.error("Failed to send message [{}] to node [{}], no WebSocket session found", msg, agentId);
         }
+        return false;
     }
 
     public Set<String> agentIds() {

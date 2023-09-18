@@ -16,6 +16,8 @@ import com.mathbeta.microedge.mapper.AppVersionMapper;
 import com.mathbeta.microedge.mapper.NodeAppMapper;
 import com.mathbeta.microedge.service.IAppService;
 import com.mathbeta.microedge.service.INodeAppService;
+import com.mathbeta.microedge.utils.AppManager;
+import com.mathbeta.microedge.utils.Constants;
 import com.mathbeta.microedge.utils.JsonUtil;
 import com.mathbeta.microedge.utils.WebSocketManager;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -75,7 +78,7 @@ public class AppService extends BaseService<App> implements IAppService {
             String containerName = String.format("microedge_%s", instanceId);
             App app = appMapper.queryById(appId);
 
-            WebSocketManager.getManager().sendMsg(nodeId, JSON.toJSONString(RunAppMsg.builder()
+            result = WebSocketManager.getManager().sendMsg(nodeId, JSON.toJSONString(RunAppMsg.builder()
                     .type(BaseMsg.TYPE_RUN_APP)
                     .appName(app.getName())
                     .containerName(containerName)
@@ -98,12 +101,11 @@ public class AppService extends BaseService<App> implements IAppService {
     @Override
     public boolean removeApp(String nodeId, String nodeAppId) {
         try {
-            String containerName = String.format("microedge_%s", nodeAppId);
-            WebSocketManager.getManager().sendMsg(nodeId, JSON.toJSONString(RemoveAppMsg.builder()
+            String containerName = String.format(Constants.APP_CONTAINER_NAME_TEMPLATE, nodeAppId);
+            return WebSocketManager.getManager().sendMsg(nodeId, JSON.toJSONString(RemoveAppMsg.builder()
                     .type(BaseMsg.TYPE_REMOVE_APP)
                     .containerName(containerName)
                     .build()));
-            return true;
         } catch (Exception e) {
             log.error("Failed to send remove app message to agent {}", nodeId, e);
         }
@@ -113,12 +115,11 @@ public class AppService extends BaseService<App> implements IAppService {
     @Override
     public boolean restartApp(String nodeId, String nodeAppId) {
         try {
-            String containerName = String.format("microedge_%s", nodeAppId);
-            WebSocketManager.getManager().sendMsg(nodeId, JSON.toJSONString(RestartAppMsg.builder()
+            String containerName = String.format(Constants.APP_CONTAINER_NAME_TEMPLATE, nodeAppId);
+            return WebSocketManager.getManager().sendMsg(nodeId, JSON.toJSONString(RestartAppMsg.builder()
                     .type(BaseMsg.TYPE_RESTART_APP)
                     .containerName(containerName)
                     .build()));
-            return true;
         } catch (Exception e) {
             log.error("Failed to send remove app message to agent {}", nodeId, e);
         }
@@ -156,7 +157,7 @@ public class AppService extends BaseService<App> implements IAppService {
                             .build();
                     nodeAppService.create(nodeApp);
                     String instanceId = (String) nodeApp.getId();
-                    String containerName = String.format("microedge_%s", instanceId);
+                    String containerName = String.format(Constants.APP_CONTAINER_NAME_TEMPLATE, instanceId);
 
                     App app = appMapper.queryById(e.getAppId());
                     AppVersion appVersion = appVersionMapper.queryById(e.getAppVersionId());
@@ -192,11 +193,10 @@ public class AppService extends BaseService<App> implements IAppService {
                     log.error("Failed to create node app link", ex);
                 }
             });
-            WebSocketManager.getManager().sendMsg(nodeId, JSON.toJSONString(UpgradeAppMsg.builder()
+            return WebSocketManager.getManager().sendMsg(nodeId, JSON.toJSONString(UpgradeAppMsg.builder()
                     .type(BaseMsg.TYPE_UPGRADE_APP)
                     .upgradeConfigs(upgradeConfigs)
                     .build()));
-            return true;
         } catch (Exception e) {
             log.error("Failed to send remove app message to agent {}", nodeId, e);
         }
@@ -213,12 +213,21 @@ public class AppService extends BaseService<App> implements IAppService {
             return Result.success(nodeApps.stream().map(e -> {
                 App app = appMapper.queryById(e.getAppId());
                 AppVersion appVersion = appVersionMapper.queryById(e.getVersionId());
+                String containerName = String.format(Constants.APP_CONTAINER_NAME_TEMPLATE, e.getId());
+                Optional<AppInstance> instance = AppManager.getManager().queryByContainerName(containerName);
+
                 return AppInstance.builder()
                         .appName(app.getName())
                         .nodeId(e.getNodeId())
-                        .containerName(String.format("microedge_%s", e.getId()))
+                        .status(instance.map(AppInstance::getStatus).orElse("not exist"))
+                        .containerId(instance.map(AppInstance::getContainerId).orElse(null))
+                        .containerName(containerName)
                         .image(appVersion.getImage())
                         .versionNum(appVersion.getVersionNum())
+                        .registryId(instance.map(AppInstance::getRegistryId).orElse(null))
+                        .env(instance.map(AppInstance::getEnv).orElse(null))
+                        .portMappings(instance.map(AppInstance::getPortMappings).orElse(null))
+                        .volumeMappings(instance.map(AppInstance::getVolumeMappings).orElse(null))
                         .build();
             }).collect(Collectors.toList()));
         }

@@ -18,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppInstance {
+    private String status;
     private String nodeId;
     private String appName;
     private String containerId;

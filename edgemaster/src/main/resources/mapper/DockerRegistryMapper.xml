@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<!-- docker镜像仓库 -->
+<mapper namespace="com.mathbeta.microedge.mapper.DockerRegistryMapper">
+    <resultMap type="com.mathbeta.microedge.entity.DockerRegistry" id="dockerRegistryResultMap">
+        <result column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="is_public" property="isPublic" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--新增操作 -->
+    <insert id="create" parameterType="com.mathbeta.microedge.entity.DockerRegistry">
+        insert into edge_docker_registry
+        (`id`,`url`,`user_email`,`user_name`,`password`,`is_public`,`create_time`)
+        values
+        (#{id},#{url},#{userEmail},#{userName},#{password},#{isPublic},#{createTime})
+    </insert>
+
+    <!--更新操作-->
+    <update id="update" parameterType="com.mathbeta.microedge.entity.DockerRegistry">
+        update edge_docker_registry
+        <include refid="sql_update"/>
+        where id = #{id}
+    </update>
+
+    <!--根据id删除-->
+    <delete id="deleteById" parameterType="java.lang.String">
+        delete from edge_docker_registry where id =#{id}
+    </delete>
+
+    <!--删除-->
+    <delete id="delete" parameterType="com.mathbeta.microedge.entity.DockerRegistry">
+        delete from edge_docker_registry
+        <include refid="sql_where_and_equal"/>
+    </delete>
+
+    <!--根据id查询-->
+    <select id="queryById"  resultMap="dockerRegistryResultMap">
+        <include refid="sql_select"/>
+        where s.id = #{id}
+    </select>
+
+    <!--获取数据条数-->
+    <select id="count" parameterType="java.util.Map" resultType="int">
+        select count(1) from edge_docker_registry t
+        <include refid="sql_where_and_equal"/>
+    </select>
+
+    <!--根据条件查询-->
+    <select id="query"  parameterType="java.util.Map" resultMap="dockerRegistryResultMap">
+        <include refid="sql_select"/>
+        <include refid="sql_where_and_equal"/>
+        order by s.create_time desc
+        <if test="__pageStart != null and __pageSize != null">
+        limit #{__pageStart},#{__pageSize}
+        </if>
+    </select>
+
+    <!--查询字段-->
+    <sql id="sql_select">
+        SELECT `id`,`url`,`user_email`,`user_name`,`password`,`is_public`,`create_time`        from edge_docker_registry s
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_and_equal">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                and (
+                `id` like CONCAT('%', #{search}, '%')
+				or `url` like CONCAT('%', #{search}, '%')
+				or `user_email` like CONCAT('%', #{search}, '%')
+				or `user_name` like CONCAT('%', #{search}, '%')
+				or `password` like CONCAT('%', #{search}, '%')
+				or `is_public` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null">
+            <![CDATA[
+                and `id` = #{id}
+            ]]>
+            </if>
+            <if test="url != null">
+            <![CDATA[
+                and `url` = #{url}
+            ]]>
+            </if>
+            <if test="userEmail != null">
+            <![CDATA[
+                and `user_email` = #{userEmail}
+            ]]>
+            </if>
+            <if test="userName != null">
+            <![CDATA[
+                and `user_name` = #{userName}
+            ]]>
+            </if>
+            <if test="password != null">
+            <![CDATA[
+                and `password` = #{password}
+            ]]>
+            </if>
+            <if test="isPublic != null">
+            <![CDATA[
+                and `is_public` = #{isPublic}
+            ]]>
+            </if>
+            <if test="createTime != null">
+            <![CDATA[
+                and `create_time` = #{createTime}
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_or_equal">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                or (
+                `id` like CONCAT('%', #{search}, '%')
+				or `url` like CONCAT('%', #{search}, '%')
+				or `user_email` like CONCAT('%', #{search}, '%')
+				or `user_name` like CONCAT('%', #{search}, '%')
+				or `password` like CONCAT('%', #{search}, '%')
+				or `is_public` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null">
+            <![CDATA[
+                or `id` = #{id}
+            ]]>
+            </if>
+            <if test="url != null">
+            <![CDATA[
+                or `url` = #{url}
+            ]]>
+            </if>
+            <if test="userEmail != null">
+            <![CDATA[
+                or `user_email` = #{userEmail}
+            ]]>
+            </if>
+            <if test="userName != null">
+            <![CDATA[
+                or `user_name` = #{userName}
+            ]]>
+            </if>
+            <if test="password != null">
+            <![CDATA[
+                or `password` = #{password}
+            ]]>
+            </if>
+            <if test="isPublic != null">
+            <![CDATA[
+                or `is_public` = #{isPublic}
+            ]]>
+            </if>
+            <if test="createTime != null">
+            <![CDATA[
+                or `create_time` = #{createTime}
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_and_like">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                and (
+                `id` like CONCAT('%', #{search}, '%')
+				or `url` like CONCAT('%', #{search}, '%')
+				or `user_email` like CONCAT('%', #{search}, '%')
+				or `user_name` like CONCAT('%', #{search}, '%')
+				or `password` like CONCAT('%', #{search}, '%')
+				or `is_public` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null">
+            <![CDATA[
+                and `id` like CONCAT('%', #{id}, '%')
+            ]]>
+            </if>
+            <if test="url != null">
+            <![CDATA[
+                and `url` like CONCAT('%', #{url}, '%')
+            ]]>
+            </if>
+            <if test="userEmail != null">
+            <![CDATA[
+                and `user_email` like CONCAT('%', #{userEmail}, '%')
+            ]]>
+            </if>
+            <if test="userName != null">
+            <![CDATA[
+                and `user_name` like CONCAT('%', #{userName}, '%')
+            ]]>
+            </if>
+            <if test="password != null">
+            <![CDATA[
+                and `password` like CONCAT('%', #{password}, '%')
+            ]]>
+            </if>
+            <if test="isPublic != null">
+            <![CDATA[
+                and `is_public` like CONCAT('%', #{isPublic}, '%')
+            ]]>
+            </if>
+            <if test="createTime != null">
+            <![CDATA[
+                and `create_time` like CONCAT('%', #{createTime}, '%')
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--查询条件-->
+    <sql id="sql_where_or_like">
+        <where>
+            <!--
+            <if test="search != null and search != '' ">
+                or (
+                `id` like CONCAT('%', #{search}, '%')
+				or `url` like CONCAT('%', #{search}, '%')
+				or `user_email` like CONCAT('%', #{search}, '%')
+				or `user_name` like CONCAT('%', #{search}, '%')
+				or `password` like CONCAT('%', #{search}, '%')
+				or `is_public` like CONCAT('%', #{search}, '%')
+				or `create_time` like CONCAT('%', #{search}, '%')
+                )
+            </if>
+            -->
+            <if test="id != null">
+            <![CDATA[
+                or `id` like CONCAT('%', #{id}, '%')
+            ]]>
+            </if>
+            <if test="url != null">
+            <![CDATA[
+                or `url` like CONCAT('%', #{url}, '%')
+            ]]>
+            </if>
+            <if test="userEmail != null">
+            <![CDATA[
+                or `user_email` like CONCAT('%', #{userEmail}, '%')
+            ]]>
+            </if>
+            <if test="userName != null">
+            <![CDATA[
+                or `user_name` like CONCAT('%', #{userName}, '%')
+            ]]>
+            </if>
+            <if test="password != null">
+            <![CDATA[
+                or `password` like CONCAT('%', #{password}, '%')
+            ]]>
+            </if>
+            <if test="isPublic != null">
+            <![CDATA[
+                or `is_public` like CONCAT('%', #{isPublic}, '%')
+            ]]>
+            </if>
+            <if test="createTime != null">
+            <![CDATA[
+                or `create_time` like CONCAT('%', #{createTime}, '%')
+            ]]>
+            </if>
+        </where>
+    </sql>
+
+    <!--更新操作-->
+    <sql id="sql_update">
+        <set>
+            <if test="id != null">
+            <![CDATA[
+                `id` = #{id},
+            ]]>
+            </if>
+            <if test="url != null">
+            <![CDATA[
+                `url` = #{url},
+            ]]>
+            </if>
+            <if test="userEmail != null">
+            <![CDATA[
+                `user_email` = #{userEmail},
+            ]]>
+            </if>
+            <if test="userName != null">
+            <![CDATA[
+                `user_name` = #{userName},
+            ]]>
+            </if>
+            <if test="password != null">
+            <![CDATA[
+                `password` = #{password},
+            ]]>
+            </if>
+            <if test="isPublic != null">
+            <![CDATA[
+                `is_public` = #{isPublic},
+            ]]>
+            </if>
+            <if test="createTime != null">
+            <![CDATA[
+                `create_time` = #{createTime},
+            ]]>
+            </if>
+        </set>
+    </sql>
+</mapper>

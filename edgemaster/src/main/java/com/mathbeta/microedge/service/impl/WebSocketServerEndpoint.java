@@ -1,17 +1,22 @@
 package com.mathbeta.microedge.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.mathbeta.microedge.entity.AppInstance;
 import com.mathbeta.microedge.entity.BaseMsg;
 import com.mathbeta.microedge.entity.HeartbeatMsg;
 import com.mathbeta.microedge.entity.IdMsg;
+import com.mathbeta.microedge.utils.AppManager;
 import com.mathbeta.microedge.utils.WebSocketManager;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.eclipse.jetty.websocket.jsr356.JsrSession;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 向边缘节点提供的websocket服务接口
@@ -49,11 +54,34 @@ public class WebSocketServerEndpoint {
                     session.getAsyncRemote().sendText(JSON.toJSONString(HeartbeatMsg.builder()
                             .type(BaseMsg.TYPE_HEARTBEAT)
                             .build()));
+                    HeartbeatMsg heartbeatMsg = JSON.parseObject(msg, HeartbeatMsg.class);
+                    syncAppStatus(heartbeatMsg);
                     break;
 
                 default:
                     log.warn("Unknown message type {} of msg {}", baseMsg.getType(), msg);
             }
+        }
+    }
+
+    /**
+     * 同步节点上的应用信息
+     *
+     * @param heartbeatMsg
+     */
+    private void syncAppStatus(HeartbeatMsg heartbeatMsg) {
+        List<AppInstance> instances = AppManager.getManager().listInstances();
+        String agentId = heartbeatMsg.getAgentId();
+        instances.forEach(instance -> {
+            if (Objects.equals(instance.getNodeId(), agentId)) {
+                AppManager.getManager().removeInstance(instance.getContainerName());
+            }
+        });
+        List<AppInstance> list = heartbeatMsg.getAppInstances();
+        if (CollectionUtils.isNotEmpty(list)) {
+            list.forEach(instance -> {
+                AppManager.getManager().addInstance(instance.getContainerName(), instance);
+            });
         }
     }
 
