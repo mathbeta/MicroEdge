@@ -1,0 +1,13 @@
+master:
+  apiAddress: http://127.0.0.1:8090/master
+  registerUrl: /node/register
+  websocketAddress: ws://127.0.0.1:8090/master/ws
+
+agent:
+  namespace: default
+  ip: 127.0.0.1
+  id: 0
+  token: ""
+  registerTime: 2023-09-11T09:34:19.161Z
+
+

@@ -1,0 +1,67 @@
+#!/bin/bash
+
+cmd=$1
+arg_len=$#
+args=($*)
+
+java_exec=$(which java)
+jar_file="microedge-agent-1.0-fat.jar"
+
+case "$cmd" in
+"--help" | "-h")
+  echo "This is the command-line tool to config microedge Agent. Using"
+  echo "  chmod +x ./agentctl"
+  echo "to make this script executable, and config Agent like this"
+  echo "  ./agentctl config --namespace my_ns --master-address 192.168.2.3:8090"
+  ;;
+
+"config")
+  cmd_args=(${args[@]:1})
+  echo "config args($arg_len): ${cmd_args[*]}"
+  namespace="default"
+  master_api_address="http://127.0.0.1:8090/master"
+  master_websocket_address="ws://127.0.0.1:8090/master/ws"
+
+  for ((i = 1; i < ${arg_len}; i++)); do
+    if [ "${cmd_args[$i - 1]}" == "--namespace" ]; then
+      if [ $i -lt ${arg_len} ]; then
+        namespace=${cmd_args[$i]}
+      else
+        echo "No namespace supplied to the flag --namespace!"
+      fi
+    fi
+    if [ "${cmd_args[$i - 1]}" == "--master-address" ]; then
+      if [ $i -lt ${arg_len} ]; then
+        ma=${cmd_args[$i]}
+        master_api_address="http://${ma}/master"
+        master_websocket_address="ws://${ma}/master/ws"
+      else
+        echo "No master address supplied to the flag --master-address!"
+      fi
+    fi
+  done
+
+  echo "Set master api address to: $master_api_address"
+  echo "Set master websocket address to: $master_websocket_address"
+
+  $java_exec -jar $jar_file config --namespace "$namespace" --master-api-address \
+  "$master_api_address" --master-websocket-address "$master_websocket_address"
+  ;;
+
+"start")
+  nohup $java_exec -jar $jar_file > agent.log &
+  ;;
+
+"stop")
+  pid=$(ps -ef | grep "$jar_file" | grep -v grep | awk '{print $2}')
+  if [ -n "$pid" ]; then
+          echo "Killing microedge agent pid $pid"
+          kill -9 $pid
+  fi
+  ;;
+
+*)
+  echo "Unknown command or flag [$cmd] with args [${args[*]}]"
+  ;;
+
+esac
